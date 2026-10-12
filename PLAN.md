@@ -16,40 +16,23 @@
 
 ---
 
-## 1. Deck: single color PAHT-CF
+## 1–3. Deck, trucks and wheels: custom design
 
-- **Model:** [Print-in-Place Finger Board Pro (MakerWorld 3030564)](https://makerworld.com/en/models/3030564), deck part only.
-- **Shape:** 96 x 34mm, 45mm wheelbase, medium concave (~1.5mm), ~20° kicks.
-- **Why PAHT-CF:** the stiffest material on hand gives the best pop, and it holds up to impacts.
-- **Dry:** 80°C for 8h in the AMS HT, and print straight from it.
-- **Nozzle:** 0.4 hardened.
-- **Settings:** Bambu PAHT-CF profile, 0.12mm layers, 4 walls, 100% infill.
-- **Plate:** textured PEI or engineering plate with glue stick.
-- **Orientation:** grip side up, with tree supports under the kicks (0.2mm top Z distance).
-- **Grip:** model a 0.3mm diamond texture into the top surface.
-- **Mounting:** match the deck's hole pattern to the Tech Deck trucks and reuse their screws.
+These are custom OpenSCAD models in `models/`, with ready-to-print STLs in `stl/`. See `models/README.md` for per-part settings and assembly.
 
-## 2. Trucks: dual-axle (pro style)
+- **Deck (`deck.stl`):** 96 x 34mm, 45mm wheelbase, 1.5mm concave, 20° kicks, 0.25mm diamond grip, Tech Deck hole pattern. Print in PAHT-CF (dry 80°C for 8h), grip side up, with tree supports under the kicks.
+- **Trucks (`truck_*.stl`):** a 34mm truck with a 40° kingpin angle.
+  - Baseplate, hanger, kingpin and axle caps are PAHT-CF.
+  - Bushings are TPU 90A and the pivot cup is TPU 95A.
+  - The kingpin is a printed press-fit pin, because printed M2 threads strip. It's held with a drop of superglue.
+  - The deck mounts with the Tech Deck screws.
+- **Why single-axle:** the axle is built into the hanger and printed horizontally. A dual-axle design uses separate axle stubs, which would be too weak when printed at this size.
+- **Wheels (`wheel_core.stl` + `wheel_tire.stl`):** 7 x 4mm street wheels with a PETG core and a TPU 68D tire, printed as one multi-material object.
 
-| Part | Material | Notes |
-|---|---|---|
-| Hanger | PAHT-CF | 100% infill; print the axles horizontal (along X/Y) |
-| Baseplate | PAHT-CF | 100% infill |
-| Bushings | TPU 90A | 40% infill for a softer ride; tune infill to adjust stiffness |
-| Pivot cup | TPU 95A | |
-| Kingpin | printed PAHT-CF pin + friction cap | or reuse a Tech Deck screw |
-
-**Backup plan:** reprint the hanger in PC if PAHT-CF cracks.
-
-**Still needed:** a dual-axle truck model. Candidates are [Magnetic Fingerboard (MyMiniFactory)](https://www.myminifactory.com/object/3d-print-magnetic-fingerboard-75119) and [Printables 690876](https://www.printables.com/model/690876-finger-board-skate-board-print-in-place), or a custom design.
-
-## 3. Wheels: street, no bearings
-
-- **Size:** 7mm diameter, narrow.
-- **Core:** black PETG, 100% infill. Ream the bore so it spins freely on the axle.
-- **Tire:** **TPU 68D**, 0.6mm thick, printed in the same multi-material job. It is hard, so it rolls fast, wears slowly and grips better than bare PETG.
-- **Print:** flat, at 0.08–0.12mm layers so the wheels come out rounder. Use the 0.2 stainless nozzle if the 0.4 can't hold the detail.
-- **Spares:** keep the Tech Deck wheels.
+**Other models (backups):**
+- [Grippy Fingerboard (MakerWorld 1237823)](https://makerworld.com/en/models/1237823-grippy-fingerboard-compatible-w-tech-deck-trucks) fits Tech Deck trucks.
+- [34mm Classic High Concave (Cults3D)](https://cults3d.com/en/3d-model/game/fingerboard-deck-34mm-classic-high-concave)
+- [50mm hybrid trucks (MakerWorld 2184532)](https://makerworld.com/en/models/2184532-50mm-fingerboard-trucks) use parts from Tech Deck trucks.
 
 ## 4. Park (~120 x 60cm, can grow), all printed
 

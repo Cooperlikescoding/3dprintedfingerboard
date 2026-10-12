@@ -1,0 +1,39 @@
+# Fingerboard models (OpenSCAD)
+
+All dimensions live in `params.scad`. Edit them there, then re-export:
+
+```sh
+openscad -o stl/deck.stl models/deck.scad
+for p in baseplate hanger kingpin bushing pivot_cup axle_cap; do
+  openscad -D "part=\"$p\"" -o stl/truck_$p.stl models/truck.scad; done
+for p in core tire; do openscad -D "part=\"$p\"" -o stl/wheel_$p.stl models/wheel.scad; done
+```
+
+The deck takes about 90s to export because of the grip texture. Set `grip = false` for quick tests.
+
+## Parts per board
+
+| STL | Qty | Material | Nozzle | Notes |
+|---|---|---|---|---|
+| `deck.stl` | 1 | PAHT-CF | 0.4 hardened | 0.12mm layers, 4 walls, 100% infill, grip side up, tree supports under the kicks |
+| `truck_baseplate.stl` | 2 | PAHT-CF | 0.4 hardened | Mounting face down, 100% infill, 0.08–0.12mm layers |
+| `truck_hanger.stl` | 2 | PAHT-CF (PC as backup) | 0.4 hardened | Print as exported with tree supports. The axles lie horizontal, which keeps them strong. 100% infill |
+| `truck_kingpin.stl` | 2 | PAHT-CF | 0.4 hardened | Lies on its flat side, so the layers run along the pin |
+| `truck_bushing.stl` | 4 | TPU 90A | 0.4 | 40–100% infill: lower infill makes softer bushings |
+| `truck_pivot_cup.stl` | 2 | TPU 95A | 0.4 | Press it into the baseplate's pivot hole (optional) |
+| `truck_axle_cap.stl` | 4 | PAHT-CF or PETG | 0.2 stainless | Press onto the axle tips to hold the wheels on. Add a drop of superglue if they slip off |
+| `wheel_core.stl` + `wheel_tire.stl` | 4 | PETG core + TPU 68D tire | 0.4 | Load both files as one multi-part object, 0.08mm layers |
+
+## Assembly
+
+1. Press the kingpin pin up through the bottom bushing, the hanger and the top bushing into the baseplate's angled hole. It's a press fit, so add a drop of superglue to make it permanent. To adjust how tight the truck turns, change `bushing_h` or the bushing infill.
+2. Fit the hanger's pivot nub into the baseplate's pivot hole, with the TPU pivot cup in the hole if you're using one.
+3. Slide the wheels onto the axles with the hub facing the hanger, then press the axle caps onto the tips.
+4. Mount each truck with the pivot facing the nearest end of the deck, so the kingpins face each other. Use the Tech Deck screws: they thread straight into the baseplate's 1.4mm pilot holes.
+
+## Before printing a full set
+- Print one `wheel_core` and one `axle_cap` first, then adjust `spin_fit` and `press_fit` in `params.scad` until the wheel spins freely and the cap holds.
+- Measure your Tech Deck truck's hole spacing and screw size, then set `hole_dx`, `hole_dy`, `deck_hole_d` and `plate_hole_d` to match.
+- This truck is a first design and hasn't been printed yet, so expect to tune it.
+
+Previews are in `../previews/`.
