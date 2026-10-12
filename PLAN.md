@@ -16,6 +16,15 @@
 
 ---
 
+## Filaments used (simplified)
+
+| Filament | Parts |
+|---|---|
+| PAHT-CF | deck, baseplate, hanger, kingpin, axle caps |
+| TPU 68D | wheels |
+| TPU 40D | bushings, pivot cups |
+| PETG | all park obstacles, display stand |
+
 ## 1–3. Deck, trucks and wheels: custom design
 
 These are custom OpenSCAD models in `models/`, with ready-to-print STLs in `stl/`. See `models/README.md` for per-part settings and assembly.
@@ -27,7 +36,7 @@ These are custom OpenSCAD models in `models/`, with ready-to-print STLs in `stl/
   - The kingpin is a printed press-fit pin, because printed M2 threads strip. It's held with a drop of superglue.
   - The deck mounts with the Tech Deck screws.
 - **Single-axle:** the axle is built into the hanger and printed horizontally for strength.
-- **Wheels (`wheel_core.stl` + `wheel_tire.stl`):** 7 x 4mm street wheels with a PETG core and a TPU 68D tire, printed as one multi-material object.
+- **Wheels (`wheel.stl`):** 7 x 4mm street wheels, one piece of TPU 68D.
 
 **Other models (backups):**
 - [Grippy Fingerboard (MakerWorld 1237823)](https://makerworld.com/en/models/1237823-grippy-fingerboard-compatible-w-tech-deck-trucks) fits Tech Deck trucks.
@@ -38,23 +47,25 @@ These are custom OpenSCAD models in `models/`, with ready-to-print STLs in `stl/
 
 ### Base
 - No base board. Obstacles sit directly on the table.
-- **Feet:** cut the 2mm cork into pads with scissors, or print TPU 40D feet. This stops sliding and deadens noise.
+- **Feet:** cut the 2mm cork into pads with scissors. This stops sliding and deadens noise.
 
 ### Obstacles
-| # | Piece | Build |
+| # | Piece | Model |
 |---|---|---|
-| 1 | Quarter pipe (~8cm tall, 15cm wide) | PETG body, printed in sections; PC coping. Model: [Modular QP (MW 2390503)](https://makerworld.com/models/2390503) |
-| 2 | Funbox: ledge + 3 stairs + handrail | PLA Matte body; **PC ledge top** (slides well; wax it); PC handrail. From the [Euro Gap set (MW 2342170)](https://makerworld.com/models/2342170) |
-| 3 | Hubba ledge | **Translucent pink PETG**, so it glows when lit from behind |
-| 4 | Flat bar + kinked rail | PC on PETG stands |
-| 5 | Manual pad (1cm tall) | PLA Matte body, PC top |
-| 6 | Kicker + bank/hip | PLA Matte; TPU 40D lip at the edge |
-| 7 | Slappy curb | [Slappy (MW 2031463)](https://makerworld.com/models/2031463) in black PETG |
+| 1 | Quarter pipe (~8cm tall, 15cm wide) | [Modular QP (MW 2390503)](https://makerworld.com/models/2390503) |
+| 2 | Funbox: ledge + 3 stairs + handrail | [Euro Gap set (MW 2342170)](https://makerworld.com/models/2342170) |
+| 3 | Hubba ledge | Translucent pink PETG, so it glows when lit from behind |
+| 4 | Flat bar + kinked rail | Euro Gap set |
+| 5 | Manual pad (1cm tall) | Simple box |
+| 6 | Kicker + bank/hip | Euro Gap set |
+| 7 | Slappy curb | [Slappy (MW 2031463)](https://makerworld.com/models/2031463) |
+
+Print everything in PETG. Wax the ledge edges and rails so they slide well. Where a model calls for TPU parts, print those in PETG too or leave them off.
 
 **Rough layout:** quarter pipe at the left end, funbox and manual pad in the center, rails and hubba on the right, kicker/bank next to the funbox.
 
 ## 5. Display stand
-- Print it in Silk or Marble PLA.
+- Print it in PETG.
 - **Optional (the only laser job):** one walnut ply stand with your name engraved.
 
 ## 6. Spare sheet stock
@@ -64,7 +75,7 @@ Acrylic, birch ply and walnut aren't needed. Later uses if wanted:
 
 ## 7. Build order
 1. Dry the PAHT-CF, then print the deck and test it with the Tech Deck trucks and wheels.
-2. Print the street wheels (PETG + TPU 68D).
+2. Print the street wheels (TPU 68D).
 3. Print the single-axle trucks (PAHT-CF + TPU).
 4. Print the funbox, rails and hubba, then the quarter pipe; add cork or TPU feet.
 5. Print the display stand.

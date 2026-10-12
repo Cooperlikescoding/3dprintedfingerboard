@@ -1,7 +1,7 @@
-// 7mm street wheel: PETG core + TPU 68D tire.
-// part = "core" | "tire" | "both". Load core and tire together as one multi-part object in Bambu Studio.
+// 7mm street wheel.
+// part = "solid" (default: one-piece TPU 68D) | "core" + "tire" (two-material version: PETG core + TPU 68D tire)
 include <params.scad>
-part = "both";
+part = "solid";
 core_d = wheel_d - 2 * tire_t;
 bore   = axle_d + spin_fit;
 
@@ -20,6 +20,7 @@ module tire() difference() {
   translate([0, 0, -1]) cylinder(d = core_d, h = wheel_w + 2, $fn = 64);
 }
 translate([0, 0, 0.3]) {
-  if (part != "tire") core();
-  if (part != "core") tire();
+  if (part == "solid") union() { core(); tire(); }
+  if (part == "core") core();
+  if (part == "tire") tire();
 }

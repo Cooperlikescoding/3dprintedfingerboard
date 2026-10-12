@@ -6,12 +6,15 @@ All dimensions live in `params.scad`. Edit them there, then re-export:
 openscad -o stl/deck.stl models/deck.scad
 for p in baseplate hanger kingpin bushing pivot_cup axle_cap; do
   openscad -D "part=\"$p\"" -o stl/truck_$p.stl models/truck.scad; done
-for p in core tire; do openscad -D "part=\"$p\"" -o stl/wheel_$p.stl models/wheel.scad; done
+openscad -o stl/wheel.stl models/wheel.scad
 ```
 
 The deck takes about 90s to export because of the grip texture. Set `grip = false` for quick tests.
 
 ## Parts per board
+
+Four filaments: PAHT-CF, TPU 68D, TPU 40D and PETG (PETG for the park only).
+
 
 | STL | Qty | Material | Nozzle | Notes |
 |---|---|---|---|---|
@@ -21,8 +24,8 @@ The deck takes about 90s to export because of the grip texture. Set `grip = fals
 | `truck_kingpin.stl` | 2 | PAHT-CF | 0.4 hardened | Lies on its flat side, so the layers run along the pin |
 | `truck_bushing.stl` | 4 | TPU 40D | 0.4 | 30–60% infill: 40D is fairly firm, so lower infill makes the bushings softer |
 | `truck_pivot_cup.stl` | 2 | TPU 40D | 0.4 | Press it into the baseplate's pivot hole (optional) |
-| `truck_axle_cap.stl` | 4 | PAHT-CF or PETG | 0.2 stainless | Press onto the axle tips to hold the wheels on. Add a drop of superglue if they slip off |
-| `wheel_core.stl` + `wheel_tire.stl` | 4 | PETG core + TPU 68D tire | 0.4 | Load both files as one multi-part object, 0.08mm layers |
+| `truck_axle_cap.stl` | 4 | PAHT-CF | 0.2 stainless | Press onto the axle tips to hold the wheels on. Add a drop of superglue if they slip off |
+| `wheel.stl` | 4 | TPU 68D | 0.4 | One piece, flat on the bed, 0.08–0.12mm layers, 100% infill |
 
 ## Assembly
 
@@ -32,7 +35,7 @@ The deck takes about 90s to export because of the grip texture. Set `grip = fals
 4. Mount each truck with the pivot facing the nearest end of the deck, so the kingpins face each other. Use the Tech Deck screws: they thread straight into the baseplate's 1.4mm pilot holes.
 
 ## Before printing a full set
-- Print one `wheel_core` and one `axle_cap` first, then adjust `spin_fit` and `press_fit` in `params.scad` until the wheel spins freely and the cap holds.
+- Print one `wheel` and one `axle_cap` first, then adjust `spin_fit` and `press_fit` in `params.scad` until the wheel spins freely and the cap holds.
 - Measure your Tech Deck truck's hole spacing and screw size, then set `hole_dx`, `hole_dy`, `deck_hole_d` and `plate_hole_d` to match.
 - This truck is a first design and hasn't been printed yet, so expect to tune it.
 
