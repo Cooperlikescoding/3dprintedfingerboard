@@ -26,7 +26,7 @@ These are custom OpenSCAD models in `models/`, with ready-to-print STLs in `stl/
   - Bushings are TPU 90A and the pivot cup is TPU 95A.
   - The kingpin is a printed press-fit pin, because printed M2 threads strip. It's held with a drop of superglue.
   - The deck mounts with the Tech Deck screws.
-- **Why single-axle:** the axle is built into the hanger and printed horizontally. A dual-axle design uses separate axle stubs, which would be too weak when printed at this size.
+- **Single-axle:** the axle is built into the hanger and printed horizontally for strength.
 - **Wheels (`wheel_core.stl` + `wheel_tire.stl`):** 7 x 4mm street wheels with a PETG core and a TPU 68D tire, printed as one multi-material object.
 
 **Other models (backups):**
@@ -65,7 +65,7 @@ Acrylic, birch ply and walnut aren't needed. Later uses if wanted:
 ## 7. Build order
 1. Dry the PAHT-CF, then print the deck and test it with the Tech Deck trucks and wheels.
 2. Print the street wheels (PETG + TPU 68D).
-3. Print the dual-axle trucks (PAHT-CF + TPU).
+3. Print the single-axle trucks (PAHT-CF + TPU).
 4. Print the funbox, rails and hubba, then the quarter pipe; add cork or TPU feet.
 5. Print the display stand.
 
