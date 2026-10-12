@@ -10,7 +10,7 @@
 |---|---|
 | PLA | Bambu PLA Basic/Matte, Silk/Glow/Marble, PLA-CF |
 | PETG | Bambu PETG (black, translucent pink) |
-| TPU | Bambu TPU for AMS (68D), TPU 90A/95A |
+| TPU | TPU 40D (softer), Bambu TPU for AMS 68D (harder) |
 | Engineering | PAHT-CF, PC |
 | Sheet | 3mm walnut ply, 3mm birch ply, 3mm acrylic, 2mm cork |
 
@@ -23,7 +23,7 @@ These are custom OpenSCAD models in `models/`, with ready-to-print STLs in `stl/
 - **Deck (`deck.stl`):** 96 x 34mm, 45mm wheelbase, 1.5mm concave, 20° kicks, 0.25mm diamond grip, Tech Deck hole pattern. Print in PAHT-CF (dry 80°C for 8h), grip side up, with tree supports under the kicks.
 - **Trucks (`truck_*.stl`):** a 34mm truck with a 40° kingpin angle.
   - Baseplate, hanger, kingpin and axle caps are PAHT-CF.
-  - Bushings are TPU 90A and the pivot cup is TPU 95A.
+  - Bushings and pivot cup are TPU 40D (the softer one).
   - The kingpin is a printed press-fit pin, because printed M2 threads strip. It's held with a drop of superglue.
   - The deck mounts with the Tech Deck screws.
 - **Single-axle:** the axle is built into the hanger and printed horizontally for strength.
@@ -38,7 +38,7 @@ These are custom OpenSCAD models in `models/`, with ready-to-print STLs in `stl/
 
 ### Base
 - No base board. Obstacles sit directly on the table.
-- **Feet:** cut the 2mm cork into pads with scissors, or print TPU 95A feet. This stops sliding and deadens noise.
+- **Feet:** cut the 2mm cork into pads with scissors, or print TPU 40D feet. This stops sliding and deadens noise.
 
 ### Obstacles
 | # | Piece | Build |
@@ -48,7 +48,7 @@ These are custom OpenSCAD models in `models/`, with ready-to-print STLs in `stl/
 | 3 | Hubba ledge | **Translucent pink PETG**, so it glows when lit from behind |
 | 4 | Flat bar + kinked rail | PC on PETG stands |
 | 5 | Manual pad (1cm tall) | PLA Matte body, PC top |
-| 6 | Kicker + bank/hip | PLA Matte; TPU 95A lip at the edge |
+| 6 | Kicker + bank/hip | PLA Matte; TPU 40D lip at the edge |
 | 7 | Slappy curb | [Slappy (MW 2031463)](https://makerworld.com/models/2031463) in black PETG |
 
 **Rough layout:** quarter pipe at the left end, funbox and manual pad in the center, rails and hubba on the right, kicker/bank next to the funbox.
