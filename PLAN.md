@@ -51,48 +51,40 @@
 - **Print:** flat, at 0.08–0.12mm layers so the wheels come out rounder. Use the 0.2 stainless nozzle if the 0.4 can't hold the detail.
 - **Spares:** keep the Tech Deck wheels.
 
-## 4. Park (~120 x 60cm, can grow)
+## 4. Park (~120 x 60cm, can grow), all printed
 
-### Base: acrylic tiles
-- Laser-cut 3mm acrylic into **puzzle-joint tiles of 240 x 200mm** (5 x 3 grid = 120 x 60cm). Check the H2C laser area in Bambu Studio first.
-- Glue **2mm cork** under each tile. This stops sliding and deadens the noise from the acrylic.
+### Base
+- No base board. Obstacles sit directly on the table.
+- **Feet:** cut the 2mm cork into pads with scissors, or print TPU 95A feet. This stops sliding and deadens noise.
 
 ### Obstacles
 | # | Piece | Build |
 |---|---|---|
-| 1 | Quarter pipe (~8cm tall, 15cm wide) | PETG frame; **laser living-hinge birch ply** transition; PC coping rod. Base model: [Modular QP (MW 2390503)](https://makerworld.com/models/2390503) |
-| 2 | Funbox: ledge + 3 stairs + handrail | PLA Matte body; waxed **acrylic ledge top**; **walnut side skins**; PC handrail. Stairs/rail from [Euro Gap set (MW 2342170)](https://makerworld.com/models/2342170) |
-| 3 | Hubba ledge | **Translucent pink PETG**, so it glows when lit from below or behind |
-| 4 | Flat bar + kinked rail | PC (stiff, slides well) on PETG stands |
-| 5 | Manual pad (1cm tall) | PLA Matte body, acrylic top |
+| 1 | Quarter pipe (~8cm tall, 15cm wide) | PETG body, printed in sections; PC coping. Model: [Modular QP (MW 2390503)](https://makerworld.com/models/2390503) |
+| 2 | Funbox: ledge + 3 stairs + handrail | PLA Matte body; **PC ledge top** (slides well; wax it); PC handrail. From the [Euro Gap set (MW 2342170)](https://makerworld.com/models/2342170) |
+| 3 | Hubba ledge | **Translucent pink PETG**, so it glows when lit from behind |
+| 4 | Flat bar + kinked rail | PC on PETG stands |
+| 5 | Manual pad (1cm tall) | PLA Matte body, PC top |
 | 6 | Kicker + bank/hip | PLA Matte; TPU 95A lip at the edge |
 | 7 | Slappy curb | [Slappy (MW 2031463)](https://makerworld.com/models/2031463) in black PETG |
 
 **Rough layout:** quarter pipe at the left end, funbox and manual pad in the center, rails and hubba on the right, kicker/bank next to the funbox.
 
-## 5. Walnut ply
-- **Display stand:** angled slot for the deck, with your name or logo engraved.
-- **Offcuts:** funbox side skins.
+## 5. Display stand
+- Print it in Silk or Marble PLA.
+- **Optional (the only laser job):** one walnut ply stand with your name engraved.
 
-## 6. Laser cut list
-| Part | Material | Notes |
-|---|---|---|
-| Base tiles (x15) | 3mm acrylic | Puzzle joints, air assist on |
-| QP transition | 3mm birch ply | Living-hinge pattern |
-| QP side panels | 3mm birch ply | Profile taken from the QP model |
-| Ledge + manual pad tops | 3mm acrylic | Wax after cutting |
-| Display stand, funbox skins | 3mm walnut ply | Engrave first, then cut |
-| Pads, under-tile sheet | 2mm cork | |
-
-Run a test grid on scrap of each material before the real cuts.
+## 6. Spare sheet stock
+Acrylic, birch ply and walnut aren't needed. Later uses if wanted:
+- acrylic ledge tops
+- a single acrylic sheet as a smooth base
 
 ## 7. Build order
 1. Dry the PAHT-CF, then print the deck and test it with the Tech Deck trucks and wheels.
 2. Print the street wheels (PETG + TPU 68D).
 3. Print the dual-axle trucks (PAHT-CF + TPU).
-4. Cut the acrylic tiles and cork backing.
-5. Build the funbox, rails and hubba, then the quarter pipe.
-6. Make the walnut display stand.
+4. Print the funbox, rails and hubba, then the quarter pipe; add cork or TPU feet.
+5. Print the display stand.
 
 ## Later upgrades (if parts are ever bought)
 - 0.6mm maple veneer: laser-cut plies and press them in a printed mold ([MOLD F.O.R.G.E. 34mm](https://makerworld.com/models/2542743)).
