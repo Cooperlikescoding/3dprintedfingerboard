@@ -40,3 +40,15 @@ Four filaments: PAHT-CF, TPU 68D, TPU 40D and PETG (PETG for the park only).
 - This truck is a first design and hasn't been printed yet, so expect to tune it.
 
 Previews are in `../previews/`.
+
+# Halloween begleri (`halloween_begleri.scad`)
+
+Print everything in glow PLA with a **hardened nozzle**, because glow filament is abrasive. Use 0.12mm layers.
+
+| STL | Qty | Notes |
+|---|---|---|
+| `begleri_core.stl` | 2 | 19mm weighted core for a 4-pass monkey's fist. Set `nut_af` and `nut_t` to match your nut (default is M6). Add a **pause at the Z height printed when you export the file** (11.15mm for the default M6 settings), drop in the nut, then resume. Use 100% infill. |
+| `begleri_skull.stl` | 1 | Slider bead with a 4.6mm bore for 550 cord. Print with the face up and tree supports in the bore. |
+| `begleri_pumpkin.stl` | 1 | Slider bead, set up the same way as the skull. |
+
+To assemble, tie a monkey's fist around each core and thread the skull and pumpkin onto the cord between them. Charge the glow PLA under a light for a few minutes before using it in the dark.
