@@ -52,3 +52,23 @@ Print everything in glow PLA with a **hardened nozzle**, because glow filament i
 | `begleri_pumpkin.stl` | 1 | Slider bead, set up the same way as the skull. |
 
 To assemble, tie a monkey's fist around each core and thread the skull and pumpkin onto the cord between them. Charge the glow PLA under a light for a few minutes before using it in the dark.
+
+# Pumpkin begleri end bead (`pumpkin_end_bead.scad`)
+
+A weighted jack-o'-lantern end bead for 550 cord. It's about 24mm wide and 23mm tall, and an M6 nut sits inside.
+
+Load all three STLs into Bambu Studio together and choose **"Load as a single object with multiple parts"**, then assign a filament to each part:
+
+| STL | Filament | Nozzle |
+|---|---|---|
+| `pumpkin_end_shell.stl` | Bambu PLA Silk+ Orange/Gold | either |
+| `pumpkin_end_core.stl` | eSun PLA Glow Rainbow | **hardened**, because glow filament is abrasive |
+| `pumpkin_end_stem.stl` | brown PLA | either |
+
+**Settings:** 0.12mm layers, 100% infill (for weight), and no supports. The stem's small overhang prints fine, but you can add tree supports if it droops.
+
+**Nut:** add a pause at **Z = 11.85mm** and drop in an M6 nut when it stops (10mm across the flats, 5mm thick). The pause height prints in the console when you export, so check it there if you change any sizes.
+
+**Assembly:** thread the cord in through the stem, out through the nut and the bottom, tie an overhand knot, then pull the knot up into the bottom recess. The cord passes through the nut's threaded hole: 550 cord is about 4mm and an M6 nut's hole is about 4.9mm, so it's a snug fit.
+
+Charge the glow core under a light, and the face will glow in the dark.
