@@ -19,8 +19,8 @@ mkdirSync('../stl', { recursive: true });
 // Assembled-pose meshes for the designer page to show if WebAssembly can't run.
 if (!process.argv[2]) {
   mkdirSync('preview', { recursive: true });
-  for (const name of ['frame', 'lid', 'leg']) writeFileSync(`preview/${name}.stl`, Buffer.from(toSTL(parts[name])));
-  writeFileSync('preview/parts.json', JSON.stringify({ ghosts: parts.ghosts, dims: parts.dims, pivot: parts.pivot }));
+  const meshes = Object.fromEntries(['frame', 'lid', 'leg'].map(n => [n, Buffer.from(toSTL(parts[n])).toString('base64')]));
+  writeFileSync('preview/parts.json', JSON.stringify({ ghosts: parts.ghosts, dims: parts.dims, pivot: parts.pivot, meshes }));
 }
 for (const name of ['frame', 'lid', 'leg']) {
   const m = forPrint(parts[name], name);

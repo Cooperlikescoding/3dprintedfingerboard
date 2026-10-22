@@ -112,12 +112,10 @@ main { position: relative; min-width: 0; background: var(--scene); }
     <dl class="readout" id="readout"></dl>
 
     <div class="btns">
-      <button class="btn primary" id="dl-frame">Frame STL</button>
-      <button class="btn" id="dl-lid">Lid STL</button>
-      <button class="btn" id="dl-leg">Leg STL</button>
+      <button class="btn primary" id="dl">Download STLs (.zip)</button>
       <button class="btn" id="copy">Copy sizes</button>
     </div>
-    <p class="note" id="dlnote">STLs come out already laid flat for printing. If a download doesn't start here, the default STLs are in the repo under <code>stl/ic705_*.stl</code>. For your own sizes, press Copy sizes, save it as <code>sizes.json</code>, and run <code>node export-stl.js sizes.json</code> in <code>ic705-case/</code>.</p>
+    <p class="note" id="dlnote">The zip holds the frame, the lid and a leg (print two), already laid flat for printing. The default STLs are also in the repo under <code>stl/ic705_*.stl</code>.</p>
   </aside>
   <main>
     <canvas id="view" aria-label="3D view of the case"></canvas>
@@ -333,18 +331,42 @@ function rebuild() {
 }
 
 // ---- Export ----
-function save(name) {
-  if (!parts) return;
-  const blob = new Blob([toSTL(forPrint(parts[name], name))], { type: 'model/stl' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob); a.download = `ic705_${name}.stl`;
+// Minimal stored (uncompressed) zip writer.
+const CRC = new Uint32Array(256).map((_, n) => { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1; return c >>> 0; });
+const crc32 = (u8) => { let c = ~0; for (const b of u8) c = CRC[(c ^ b) & 255] ^ (c >>> 8); return ~c >>> 0; };
+function zip(files) {
+  const enc = new TextEncoder(), chunks = [], central = [];
+  let off = 0;
+  for (const { name, data } of files) {
+    const nm = enc.encode(name), u8 = new Uint8Array(data), crc = crc32(u8);
+    const h = new DataView(new ArrayBuffer(30));
+    [[0, 0x04034b50, 4], [4, 20, 2], [14, crc, 4], [18, u8.length, 4], [22, u8.length, 4], [26, nm.length, 2]].forEach(([o, v, n]) => n === 4 ? h.setUint32(o, v, true) : h.setUint16(o, v, true));
+    const c = new DataView(new ArrayBuffer(46));
+    [[0, 0x02014b50, 4], [4, 20, 2], [6, 20, 2], [16, crc, 4], [20, u8.length, 4], [24, u8.length, 4], [28, nm.length, 2], [42, off, 4]].forEach(([o, v, n]) => n === 4 ? c.setUint32(o, v, true) : c.setUint16(o, v, true));
+    chunks.push(h.buffer, nm, u8); central.push(c.buffer, nm);
+    off += 30 + nm.length + u8.length;
+  }
+  const size = central.reduce((a, b) => a + b.byteLength, 0), e = new DataView(new ArrayBuffer(22));
+  [[0, 0x06054b50, 4], [8, files.length, 2], [10, files.length, 2], [12, size, 4], [16, off, 4]].forEach(([o, v, n]) => n === 4 ? e.setUint32(o, v, true) : e.setUint16(o, v, true));
+  return new Blob([...chunks, ...central, e.buffer], { type: 'application/zip' });
+}
+async function download() {
+  if (!parts || parts.frame.isBufferGeometry) return;
+  const blob = zip(['frame', 'lid', 'leg'].map((n) => ({ name: `ic705_${n}.stl`, data: toSTL(forPrint(parts[n], n)) })));
+  const filename = 'ic705_case_stl.zip';
+  const downloads = window.claude?.use ? await window.claude.use('downloads') : null;
+  if (downloads) {
+    try { await downloads.save({ filename, data: blob }); setStatus(`Saved ${filename}.`); }
+    catch (e) { setStatus(e.code === 'declined' ? 'Download cancelled.' : `Couldn't save the zip (${e.code}). The default STLs are in the repo.`, e.code !== 'declined'); }
+    return;
+  }
+  const a = document.createElement('a');   // running locally, outside the Claude viewer
+  a.href = URL.createObjectURL(blob); a.download = filename;
   document.body.append(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(a.href), 4000);
-  setStatus(`Saving ic705_${name}.stl. If nothing downloads, use the STLs in the repo.`);
+  setStatus(`Saving ${filename}.`);
 }
-$('dl-frame').onclick = () => save('frame');
-$('dl-lid').onclick = () => save('lid');
-$('dl-leg').onclick = () => save('leg');
+$('dl').onclick = download;
 $('copy').onclick = async () => {
   const json = JSON.stringify({ radio: P.radio, tuner: P.tuner, mic: P.mic, clear: P.clear, wall: P.wall, bump: P.bump, lidClear: P.lidClear }, null, 2);
   try { await navigator.clipboard.writeText(json); setStatus('Sizes copied. Save them as sizes.json next to export-stl.js.'); }
@@ -363,12 +385,12 @@ try {
 // Show the prebuilt default case when WebAssembly is blocked; editing needs the live engine.
 async function fallback(err) {
   try {
-    const [info, ...geos] = await Promise.all([fetch('./preview/parts.json').then(r => r.json()),
-      ...['frame', 'lid', 'leg'].map(n => fetch(`./preview/${n}.stl`).then(r => r.arrayBuffer()).then(readSTL))]);
-    parts = { ...info, frame: geos[0], lid: geos[1], leg: geos[2] };
+    const info = await fetch('./preview/parts.json').then(r => r.json());
+    const unb64 = (b) => Uint8Array.from(atob(b), (ch) => ch.charCodeAt(0)).buffer;
+    parts = { ...info, frame: readSTL(unb64(info.meshes.frame)), lid: readSTL(unb64(info.meshes.lid)), leg: readSTL(unb64(info.meshes.leg)) };
     const d = parts.dims;
     $('readout').innerHTML = `<div><dt>Case body</dt><dd>${d.W.toFixed(1)} × ${d.H.toFixed(1)} × ${d.D.toFixed(1)}</dd></div>`;
-    for (const el of document.querySelectorAll('aside input[type=number], #dl-frame, #dl-lid, #dl-leg')) el.disabled = true;
+    for (const el of document.querySelectorAll('aside input[type=number], #dl')) el.disabled = true;
     draw();
     setStatus('Showing the default sizes. Live editing needs WebAssembly, which this viewer blocks; open the page from the repo to edit.', true);
   } catch (e2) {

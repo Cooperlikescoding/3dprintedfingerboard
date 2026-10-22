@@ -28,7 +28,7 @@ The defaults are published sizes, and the HM-243 size is a guess. Measure your o
 
 ## Use
 
-- **Designer:** run `python3 -m http.server` in this folder, then open http://localhost:8000. Type your sizes in to see the case rebuild, then download STLs, which come out already laid flat for printing.
+- **Designer:** run `python3 -m http.server` in this folder, then open http://localhost:8000. Type your sizes in to see the case rebuild, then use **Download STLs (.zip)** to get all three parts, already laid flat for printing.
 - **Command line:** run `npm install`, then `node export-stl.js sizes.json`. That writes `../stl/ic705_frame.stl`, `ic705_lid.stl` and `ic705_leg.stl`. Get `sizes.json` from the designer's **Copy sizes** button. Run it without a file to use the defaults.
 
 ## Printing
