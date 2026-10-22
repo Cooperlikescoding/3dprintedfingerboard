@@ -1,0 +1,389 @@
+<meta charset="utf-8">
+<title>IC-705 Field Case</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Semi+Condensed:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: instrument-panel sidebar of measured inputs beside a full-height 3D bench view; stacks on phones. */
+:root {
+  --bg: #eef0ec;        /* bench mat */
+  --panel: #f8f9f6;
+  --ink: #1d2422;
+  --muted: #5d6863;
+  --line: #d3d8d2;
+  --accent: #d9731a;    /* IC-705 amber backlight */
+  --accent-ink: #ffffff;
+  --scene: #e3e6e1;
+  --field: #ffffff;
+  --frame-col: #3c4a45;
+  --lid-col: #7f8f6a;
+  --font-display: "Saira Semi Condensed", "Arial Narrow", sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121615; --panel: #181e1c; --ink: #e6ebe7; --muted: #94a19b; --line: #2c3532;
+  --accent: #f0913a; --accent-ink: #1a1208; --scene: #0e1211; --field: #101513;
+  --frame-col: #6f827a; --lid-col: #9fb084; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #121615; --panel: #181e1c; --ink: #e6ebe7; --muted: #94a19b; --line: #2c3532;
+  --accent: #f0913a; --accent-ink: #1a1208; --scene: #0e1211; --field: #101513;
+  --frame-col: #6f827a; --lid-col: #9fb084; color-scheme: dark }
+
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 14px; }
+.app { display: grid; grid-template-columns: minmax(280px, 340px) 1fr; height: 100%; }
+aside { background: var(--panel); border-right: 1px solid var(--line); overflow-y: auto;
+  padding-block: 18px 28px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: 16px;
+  display: flex; flex-direction: column; gap: 18px; }
+header h1 { font-family: var(--font-display); font-weight: 700; font-size: 26px; letter-spacing: 0.01em; margin: 0; text-wrap: balance; }
+header p { margin: 4px 0 0; color: var(--muted); line-height: 1.45; }
+fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 8px; }
+legend { font-family: var(--font-display); font-weight: 500; font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--muted); margin-bottom: 6px; padding: 0; display: flex; gap: 8px; align-items: baseline; width: 100%; }
+legend small { font-family: var(--font-body); text-transform: none; letter-spacing: 0; font-size: 12px; opacity: .8; }
+.row { display: grid; grid-template-columns: 1fr 92px; align-items: center; gap: 10px; }
+.row label { color: var(--ink); }
+.num { display: flex; align-items: center; border: 1px solid var(--line); border-radius: 6px; background: var(--field); }
+.num input { width: 100%; min-width: 0; border: 0; background: transparent; color: var(--ink); font: 500 14px var(--font-mono);
+  padding: 6px 4px 6px 8px; font-variant-numeric: tabular-nums; text-align: right; }
+.num span { font: 12px var(--font-mono); color: var(--muted); padding-right: 8px; }
+.num:focus-within { border-color: var(--accent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 30%, transparent); }
+input:focus { outline: none; }
+.seg { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; border: 1px solid var(--line); border-radius: 7px; overflow: hidden; }
+.seg button { border: 0; background: var(--field); color: var(--ink); font: 500 13px var(--font-body); padding: 7px 4px; cursor: pointer; }
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--panel); }
+.seg button:focus-visible, .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.check { display: flex; gap: 8px; align-items: center; }
+.check input { accent-color: var(--accent); width: 16px; height: 16px; }
+.readout { font-family: var(--font-mono); font-size: 13px; display: grid; gap: 4px; border-top: 1px solid var(--line); padding-top: 12px; }
+.readout div { display: flex; justify-content: space-between; gap: 12px; }
+.readout dt { color: var(--muted); }
+.readout dd { margin: 0; font-variant-numeric: tabular-nums; text-align: right; }
+.btns { display: flex; flex-wrap: wrap; gap: 8px; }
+.btn { border: 1px solid var(--line); background: var(--field); color: var(--ink); border-radius: 7px; padding: 8px 12px; font: 500 13px var(--font-body); cursor: pointer; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.note { color: var(--muted); font-size: 12.5px; line-height: 1.5; margin: 0; }
+.note code { font-family: var(--font-mono); font-size: 12px; }
+main { position: relative; min-width: 0; background: var(--scene); }
+#view { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+.status { position: absolute; left: 14px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); font: 12px var(--font-mono); color: var(--muted);
+  background: color-mix(in srgb, var(--panel) 85%, transparent); border: 1px solid var(--line); border-radius: 6px; padding: 5px 9px; max-width: calc(100% - 28px); }
+.status.err { color: var(--ink); border-color: var(--accent); }
+.legend3d { position: absolute; right: max(14px, env(safe-area-inset-right, 0px)); top: 12px; display: flex; gap: 12px; font-size: 12px; color: var(--muted);
+  background: color-mix(in srgb, var(--panel) 85%, transparent); border: 1px solid var(--line); border-radius: 6px; padding: 5px 9px; }
+.sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+@media (max-width: 760px) {
+  .app { grid-template-columns: 1fr; grid-template-rows: 58vh auto; height: auto; }
+  main { order: -1; height: 58vh; }
+  aside { border-right: 0; border-top: 1px solid var(--line); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="app">
+  <aside>
+    <header>
+      <h1>IC-705 Field Case</h1>
+      <p>Operate-in-case frame with a clip-on lid, AH-705 bay, HM-243 cradle, kickstand legs, tripod nut, strap bars and cable clips. Measure your gear with calipers and type the sizes in.</p>
+    </header>
+
+    <fieldset>
+      <legend>View</legend>
+      <div class="seg" role="group" aria-label="View mode">
+        <button id="v-assembly" aria-pressed="true">Assembled</button>
+        <button id="v-print" aria-pressed="false">Print layout</button>
+      </div>
+      <div class="seg" role="group" aria-label="Lid">
+        <button id="lid-off" aria-pressed="false">No lid</button>
+        <button id="lid-on" aria-pressed="false">Lid on</button>
+        <button id="lid-open" aria-pressed="true">Lid beside</button>
+      </div>
+      <label class="check"><input type="checkbox" id="ghosts" checked> Show radio, tuner and mic</label>
+      <label class="check"><input type="checkbox" id="legs"> Kickstand down (tilts the screen up)</label>
+    </fieldset>
+
+    <fieldset id="f-radio"><legend>IC-705 <small>body, no knobs</small></legend></fieldset>
+    <fieldset id="f-tuner"><legend>AH-705 <small>lying flat</small></legend></fieldset>
+    <fieldset id="f-mic"><legend>HM-243 <small>estimate, measure it</small></legend></fieldset>
+    <fieldset id="f-fit"><legend>Fit</legend></fieldset>
+
+    <dl class="readout" id="readout"></dl>
+
+    <div class="btns">
+      <button class="btn primary" id="dl-frame">Frame STL</button>
+      <button class="btn" id="dl-lid">Lid STL</button>
+      <button class="btn" id="dl-leg">Leg STL</button>
+      <button class="btn" id="copy">Copy sizes</button>
+    </div>
+    <p class="note" id="dlnote">STLs come out already laid flat for printing. If a download doesn't start here, the default STLs are in the repo under <code>stl/ic705_*.stl</code>. For your own sizes, press Copy sizes, save it as <code>sizes.json</code>, and run <code>node export-stl.js sizes.json</code> in <code>ic705-case/</code>.</p>
+  </aside>
+  <main>
+    <canvas id="view" aria-label="3D view of the case"></canvas>
+    <div class="legend3d" aria-hidden="true">
+      <span><i class="sw" style="background:var(--frame-col)"></i>Frame</span>
+      <span><i class="sw" style="background:var(--lid-col)"></i>Lid</span>
+      <span><i class="sw" style="background:var(--accent)"></i>Legs</span>
+    </div>
+    <div class="status" id="status">Loading geometry engine…</div>
+  </main>
+</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.159.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.159.0/examples/jsm/",
+  "manifold-3d": "https://cdn.jsdelivr.net/npm/manifold-3d@3.5.1/manifold.js"
+} }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import Module from 'manifold-3d';
+import { DEFAULTS, buildCase, toGeometry, toSTL, forPrint, PRINT_POSE } from './case.js';
+
+const $ = (id) => document.getElementById(id);
+const statusEl = $('status');
+const setStatus = (msg, err = false) => { statusEl.textContent = msg; statusEl.classList.toggle('err', err); };
+
+// ---- Inputs ----
+const P = structuredClone(DEFAULTS);
+const FIELDS = {
+  'f-radio': [['radio.w', 'Width'], ['radio.h', 'Height'], ['radio.d', 'Depth']],
+  'f-tuner': [['tuner.w', 'Width'], ['tuner.h', 'Thickness'], ['tuner.d', 'Depth']],
+  'f-mic':   [['mic.w', 'Width'], ['mic.h', 'Length'], ['mic.d', 'Thickness']],
+  'f-fit':   [['clear', 'Clearance each side'], ['wall', 'Wall thickness'], ['bump', 'Front bumper'], ['lidClear', 'Lid knob space']],
+};
+const get = (k) => k.split('.').reduce((o, s) => o[s], P);
+const set = (k, v) => { const ks = k.split('.'); ks.slice(0, -1).reduce((o, s) => o[s], P)[ks.at(-1)] = v; };
+for (const [fs, rows] of Object.entries(FIELDS)) {
+  for (const [key, label] of rows) {
+    const id = 'in-' + key.replace('.', '-');
+    const row = document.createElement('div');
+    row.className = 'row';
+    row.innerHTML = `<label for="${id}">${label}</label><span class="num"><input id="${id}" type="number" inputmode="decimal" step="0.1" min="0.4" value="${get(key)}"><span>mm</span></span>`;
+    $(fs).append(row);
+    row.querySelector('input').addEventListener('change', (e) => {
+      const v = parseFloat(e.target.value);
+      if (Number.isFinite(v) && v > 0) { set(key, v); rebuild(); } else e.target.value = get(key);
+    });
+  }
+}
+
+// ---- Scene ----
+const canvas = $('view');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(35, 1, 1, 5000);
+camera.position.set(330, 260, 420);
+const controls = new OrbitControls(camera, canvas);
+controls.target.set(0, 70, -40);
+controls.enableDamping = true;
+scene.add(new THREE.HemisphereLight(0xffffff, 0x445048, 1.1));
+const sun = new THREE.DirectionalLight(0xffffff, 1.6); sun.position.set(250, 400, 300); scene.add(sun);
+const fill = new THREE.DirectionalLight(0xffffff, 0.5); fill.position.set(-300, 120, -200); scene.add(fill);
+const grid = new THREE.GridHelper(800, 32); scene.add(grid);
+
+const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const mats = {
+  frame: new THREE.MeshStandardMaterial({ roughness: 0.75, metalness: 0.05 }),
+  lid:   new THREE.MeshStandardMaterial({ roughness: 0.7, metalness: 0.05 }),
+  leg:   new THREE.MeshStandardMaterial({ roughness: 0.6 }),
+  ghost: new THREE.MeshStandardMaterial({ color: 0x9aa7b4, transparent: true, opacity: 0.35, depthWrite: false }),
+};
+function applyTheme() {
+  scene.background = new THREE.Color(css('--scene'));
+  mats.frame.color.set(css('--frame-col'));
+  mats.lid.color.set(css('--lid-col'));
+  mats.leg.color.set(css('--accent'));
+  const g = new THREE.Color(css('--line'));
+  grid.material.color = g; grid.material.vertexColors = false; grid.material.needsUpdate = true;
+}
+applyTheme();
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
+new MutationObserver(applyTheme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+const world = new THREE.Group(); scene.add(world);
+function resize() {
+  const r = canvas.getBoundingClientRect();
+  renderer.setSize(r.width, r.height, false);
+  camera.aspect = r.width / Math.max(r.height, 1); camera.updateProjectionMatrix();
+}
+new ResizeObserver(resize).observe(canvas);
+resize();
+(function loop() { controls.update(); renderer.render(scene, camera); requestAnimationFrame(loop); })();
+
+// ---- State ----
+const ui = { view: 'assembly', lid: 'open', ghosts: true, legs: false };
+let wasm = null, parts = null;
+
+function pick(group, active) { for (const b of document.querySelectorAll(group)) b.setAttribute('aria-pressed', String(b.id === active)); }
+$('v-assembly').onclick = () => { ui.view = 'assembly'; pick('#v-assembly,#v-print', 'v-assembly'); draw(); };
+$('v-print').onclick = () => { ui.view = 'print'; pick('#v-assembly,#v-print', 'v-print'); draw(); };
+for (const [id, v] of [['lid-off', 'off'], ['lid-on', 'on'], ['lid-open', 'open']])
+  $(id).onclick = () => { ui.lid = v; pick('#lid-off,#lid-on,#lid-open', id); draw(); };
+$('ghosts').onchange = (e) => { ui.ghosts = e.target.checked; draw(); };
+$('legs').onchange = (e) => { ui.legs = e.target.checked; draw(); };
+
+// A part is a manifold (live engine) or, in fallback mode, a prebuilt BufferGeometry.
+const geo = (m) => (m.isBufferGeometry ? m.clone() : toGeometry(THREE, m));
+const mesh = (m, mat) => new THREE.Mesh(geo(m), mat);
+function printGeo(name) {
+  if (!parts[name].isBufferGeometry) return forPrint(parts[name], name);
+  const g = parts[name].clone();
+  const [rx, ry, rz] = PRINT_POSE[name].map(THREE.MathUtils.degToRad);
+  g.applyMatrix4(new THREE.Matrix4().makeRotationFromEuler(new THREE.Euler(rx, ry, rz, 'ZYX')));
+  g.computeBoundingBox();
+  const b = g.boundingBox;
+  g.translate(-(b.min.x + b.max.x) / 2, -b.min.y, -(b.min.z + b.max.z) / 2);
+  return g;
+}
+
+function draw() {
+  if (!parts) return;
+  for (const c of [...world.children]) { world.remove(c); c.geometry?.dispose(); c.traverse?.((o) => o.geometry?.dispose()); }
+  world.rotation.set(0, 0, 0); world.position.set(0, 0, 0);
+  const d = parts.dims;
+
+  if (ui.view === 'print') {
+    const items = [['frame', mats.frame], ['lid', mats.lid], ['leg', mats.leg], ['leg', mats.leg]];
+    let x = -260;
+    for (const [name, mat] of items) {
+      const m = mesh(printGeo(name), mat);
+      m.geometry.computeBoundingBox();
+      const bb = m.geometry.boundingBox, w = bb.max.x - bb.min.x;
+      m.position.x = x + w / 2; x += w + 25;
+      world.add(m);
+    }
+    world.position.x = -(-260 + (x - 25 + 260) / 2);
+    fit();
+    return;
+  }
+
+  const asm = new THREE.Group();
+  asm.add(mesh(parts.frame, mats.frame));
+  if (ui.lid !== 'off') {
+    const lid = mesh(parts.lid, mats.lid);
+    if (ui.lid === 'open') { lid.rotation.y = -Math.PI / 2; lid.position.set(parts.dims.W / 2 + 60, 0, -parts.dims.D / 2 - 40); }
+    asm.add(lid);
+  }
+  for (const side of ['xL', 'xR']) {
+    const leg = mesh(parts.leg, mats.leg);
+    leg.position.set(side === 'xL' ? parts.pivot.xL - 4 : parts.pivot.xR, parts.pivot.y, parts.pivot.z);
+    if (ui.legs) leg.rotation.x = -Math.PI / 2;
+    asm.add(leg);
+  }
+  if (ui.ghosts) for (const g of Object.values(parts.ghosts)) {
+    const b = new THREE.Mesh(new THREE.BoxGeometry(...g.size), mats.ghost);
+    b.position.set(...g.pos);
+    asm.add(b);
+  }
+  world.add(asm);
+
+  if (ui.legs) {
+    // Rest the case on the leg tips and the rear feet.
+    const tipY = parts.pivot.y - DEFAULTS.legLen - 5, tipZ = parts.pivot.z;
+    const rearY = -P.feetH, rearZ = d.zo + 14;
+    const ang = Math.atan2(rearY - tipY, tipZ - rearZ);
+    world.rotation.x = -ang;
+    world.updateMatrixWorld(true);
+    const bb = new THREE.Box3().setFromObject(asm);
+    world.position.y = -bb.min.y;
+  } else {
+    world.position.y = P.feetH;
+  }
+  fit();
+}
+
+// Frame the current scene once per view change; later edits keep the user's camera.
+let fitKey = '';
+function fit() {
+  const key = ui.view + (parts ? '' : '');
+  if (key === fitKey) return;
+  fitKey = key;
+  world.updateMatrixWorld(true);
+  const bb = new THREE.Box3().setFromObject(world);
+  const c = bb.getCenter(new THREE.Vector3()), r = bb.getSize(new THREE.Vector3()).length() / 2;
+  const dir = new THREE.Vector3(0.55, 0.42, 0.72).normalize();
+  controls.target.copy(c);
+  camera.position.copy(c).addScaledVector(dir, r / Math.sin(THREE.MathUtils.degToRad(camera.fov / 2)) * 0.95);
+  controls.update();
+}
+
+function rebuild() {
+  if (!wasm) return;
+  try {
+    const t0 = performance.now();
+    parts = buildCase(wasm, P);
+    const d = parts.dims;
+    const vol = (n) => parts[n].volume() / 1000;
+    $('readout').innerHTML = [
+      ['Case body', `${d.W.toFixed(1)} × ${d.H.toFixed(1)} × ${d.D.toFixed(1)}`],
+      ['With handle and feet', `${(d.H + 40 + P.feetH).toFixed(1)} tall`],
+      ['Frame solid volume', `${vol('frame').toFixed(0)} cm³`],
+      ['Lid solid volume', `${vol('lid').toFixed(0)} cm³`],
+    ].map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('');
+    draw();
+    setStatus(`Rebuilt in ${(performance.now() - t0).toFixed(0)} ms · drag to orbit, scroll to zoom`);
+  } catch (e) {
+    setStatus(`Those sizes don't fit together: ${e.message}`, true);
+  }
+}
+
+// ---- Export ----
+function save(name) {
+  if (!parts) return;
+  const blob = new Blob([toSTL(forPrint(parts[name], name))], { type: 'model/stl' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = `ic705_${name}.stl`;
+  document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  setStatus(`Saving ic705_${name}.stl. If nothing downloads, use the STLs in the repo.`);
+}
+$('dl-frame').onclick = () => save('frame');
+$('dl-lid').onclick = () => save('lid');
+$('dl-leg').onclick = () => save('leg');
+$('copy').onclick = async () => {
+  const json = JSON.stringify({ radio: P.radio, tuner: P.tuner, mic: P.mic, clear: P.clear, wall: P.wall, bump: P.bump, lidClear: P.lidClear }, null, 2);
+  try { await navigator.clipboard.writeText(json); setStatus('Sizes copied. Save them as sizes.json next to export-stl.js.'); }
+  catch { setStatus('Copy is blocked here. Sizes: ' + JSON.stringify({ radio: P.radio, tuner: P.tuner, mic: P.mic }), true); }
+};
+
+// ---- Boot: the WASM file ships next to this page ----
+try {
+  wasm = await Module({ locateFile: () => new URL('./manifold.wasm', location.href).href });
+  wasm.setup();
+  rebuild();
+} catch (e) {
+  await fallback(e);
+}
+
+// Show the prebuilt default case when WebAssembly is blocked; editing needs the live engine.
+async function fallback(err) {
+  try {
+    const [info, ...geos] = await Promise.all([fetch('./preview/parts.json').then(r => r.json()),
+      ...['frame', 'lid', 'leg'].map(n => fetch(`./preview/${n}.stl`).then(r => r.arrayBuffer()).then(readSTL))]);
+    parts = { ...info, frame: geos[0], lid: geos[1], leg: geos[2] };
+    const d = parts.dims;
+    $('readout').innerHTML = `<div><dt>Case body</dt><dd>${d.W.toFixed(1)} × ${d.H.toFixed(1)} × ${d.D.toFixed(1)}</dd></div>`;
+    for (const el of document.querySelectorAll('aside input[type=number], #dl-frame, #dl-lid, #dl-leg')) el.disabled = true;
+    draw();
+    setStatus('Showing the default sizes. Live editing needs WebAssembly, which this viewer blocks; open the page from the repo to edit.', true);
+  } catch (e2) {
+    setStatus(`The 3D model couldn't load (${err.message}).`, true);
+  }
+}
+function readSTL(buf) {
+  const dv = new DataView(buf), n = dv.getUint32(80, true), pos = new Float32Array(n * 9);
+  for (let i = 0; i < n; i++) for (let v = 0; v < 3; v++) {
+    const o = 84 + i * 50 + 12 + v * 12, k = i * 9 + v * 3;
+    pos[k] = dv.getFloat32(o, true); pos[k + 1] = dv.getFloat32(o + 8, true); pos[k + 2] = -dv.getFloat32(o + 4, true);   // Z-up -> Y-up
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  g.computeVertexNormals();
+  return g;
+}
+</script>

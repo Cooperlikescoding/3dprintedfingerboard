@@ -1,0 +1,7 @@
+{
+  "name": "ic705-case",
+  "private": true,
+  "type": "module",
+  "scripts": { "export": "node export-stl.js" },
+  "dependencies": { "three": "0.159.0", "manifold-3d": "3.5.1" }
+}
