@@ -72,3 +72,30 @@ Load all three STLs into Bambu Studio together and choose **"Load as a single ob
 **Assembly:** thread the cord in through the stem, out through the nut and the bottom, tie an overhand knot, then pull the knot up into the bottom recess. The cord passes through the nut's threaded hole: 550 cord is about 4mm and an M6 nut's hole is about 4.9mm, so it's a snug fit.
 
 Charge the glow core under a light, and the face will glow in the dark.
+
+# Iambic paddle (`iambic_paddle.scad`)
+
+A magnet-free iambic paddle for the IC-705's built-in keyer. The paddles spring back on **TPU 40D flexure blades**.
+
+| STL | Qty | Filament | Notes |
+|---|---|---|---|
+| `paddle_base.stl` | 1 | PETG or PAHT-CF | 52 x 62mm. Press your hex nuts (M8 by default) into the 5 pockets underneath for weight |
+| `paddle_pad.stl` | 1 | TPU 40D | glue it under the base: it grips the desk and covers the nuts |
+| `paddle_paddle_foot.stl` + `paddle_paddle_blade.stl` + `paddle_paddle_arm.stl` | 2 sets | foot + arm: PETG, blade: **TPU 40D** | Load all 3 as **one object with multiple parts**, set the blade to TPU, and print upright. The blade's T-shaped ends lock into the foot and the arm |
+
+**Hardware:**
+- 4× M3 x 8 screws to hold the paddle feet to the base. They thread into 2.6mm pilot holes.
+- 2× M3 x 8 contact screws, one through each arm.
+- 1× M3 x 12 bolt + nut through the center post. This is the common contact.
+- a 3.5mm stereo jack (6mm panel mount), or a cut-off headphone cable.
+
+**Wiring:**
+- tip → left paddle's contact screw (dit)
+- ring → right paddle's contact screw (dah)
+- sleeve → center bolt (common)
+
+Fix each wire under its screw head or nut, and tie it through the small hole in the arm so the wire flexes and doesn't pull. Run the wires along the channel in the base top. If dit and dah come out backwards, change Paddle Polarity in the radio's keyer menu.
+
+**Tuning:**
+- **Gap:** turn the arm contact screws until each one almost touches the center bolt, about 0.5mm.
+- **Spring:** `blade_t` in the .scad changes how stiff the paddles feel: 1.2 is light, 1.6 is the default and 2.2 is heavy. A longer `blade_len` makes them softer.
